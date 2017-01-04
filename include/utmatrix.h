@@ -9,6 +9,7 @@
 #define __TMATRIX_H__
 
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -72,7 +73,7 @@ TVector<ValType>::TVector(int s, int si)
 		for (int i=0;i<Size;i++)
 			pVector[i]=0;
 	}
-	else throw 1;
+	else throw std::logic_error("bad size or start index");
 
 } /*-------------------------------------------------------------------------*/
 
@@ -102,7 +103,7 @@ ValType& TVector<ValType>::operator[](int pos)
 
 	if( (pos<Size+StartIndex) && (pos>=StartIndex) )
 		return pVector[pos-StartIndex];
-	else throw 1;
+	else throw std::logic_error("bad position");
 
 } /*-------------------------------------------------------------------------*/
 
@@ -192,7 +193,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 			tVector.pVector[i] = pVector[i] + v.pVector[i];
 		return tVector;
 	}
-	else throw 1;
+	else throw std::logic_error("bad size");
 
 } /*-------------------------------------------------------------------------*/
 
@@ -205,7 +206,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 			tVector.pVector[i] = pVector[i] - v.pVector[i];
 		return tVector;
 	}
-	else throw 1;
+	else throw std::logic_error("bad size");
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение
@@ -217,7 +218,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 			valType += pVector[i] * v.pVector[i];
 		return valType;
 	}
-	else throw 1;
+	else throw std::logic_error("bad size");
 } /*-------------------------------------------------------------------------*/
 
 
@@ -256,7 +257,7 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 		if(s <= MAX_MATRIX_SIZE)
 			for (int i=0;i<s;i++)
 				pVector[i] = TVector<ValType>(s-i,i);
-		else throw 1;
+		else throw std::logic_error("bad size");
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
